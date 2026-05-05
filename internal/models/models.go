@@ -336,7 +336,7 @@ func (a *WhatsAppAccount) DecryptSecrets(encryptionKey string) {
 
 // Contact represents a WhatsApp contact/profile
 type Contact struct {
-	BaseModel
+		BaseModel
 	OrganizationID     uuid.UUID  `gorm:"type:uuid;index;not null" json:"organization_id"`
 	PhoneNumber        string     `gorm:"size:50;not null" json:"phone_number"`
 	ProfileName        string     `gorm:"size:255" json:"profile_name"`
@@ -363,6 +363,9 @@ type Contact struct {
 	Organization *Organization `gorm:"foreignKey:OrganizationID" json:"organization,omitempty"`
 	AssignedUser *User         `gorm:"foreignKey:AssignedUserID" json:"assigned_user,omitempty"`
 	Messages     []Message     `gorm:"foreignKey:ContactID" json:"messages,omitempty"`
+
+	// Bot step
+	BotStep int `gorm:"default:0;index" json:"bot_step"`
 }
 
 func (Contact) TableName() string {
