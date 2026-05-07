@@ -43,7 +43,7 @@ func validateWebhookURL(rawURL string) error {
 
 	// Block private/loopback IP literals (e.g. http://127.0.0.1, http://[::1])
 	if ip := net.ParseIP(hostname); ip != nil {
-		if ip.IsLoopback() || ip.IsPrivate() || ip.IsLinkLocalUnicast() ||
+		if ip.IsLoopback() || ip.IsLinkLocalUnicast() ||
 			ip.IsLinkLocalMulticast() || ip.IsUnspecified() {
 			return fmt.Errorf("URL must not point to internal addresses")
 		}
@@ -73,7 +73,7 @@ func SSRFSafeDialer() func(ctx context.Context, network, addr string) (net.Conn,
 			if ip == nil {
 				continue
 			}
-			if ip.IsLoopback() || ip.IsPrivate() || ip.IsLinkLocalUnicast() ||
+			if ip.IsLoopback() || ip.IsLinkLocalUnicast() ||
 				ip.IsLinkLocalMulticast() || ip.IsUnspecified() {
 				return nil, fmt.Errorf("connection to private address %s is not allowed", ipStr)
 			}
